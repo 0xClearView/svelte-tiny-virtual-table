@@ -21,9 +21,9 @@
 
 	<article>
 		<VirtualTable height={500} width="auto" itemCount={100000} {itemSize}>
-			<div slot="item" let:index let:style {style} class="virtual-table-row">
-				Item #{index}
-			</div>
+			<tr slot="item" let:index let:style {style} class="virtual-table-row">
+				<td>Item #{index}</td>
+			</tr>
 		</VirtualTable>
 	</article>
 

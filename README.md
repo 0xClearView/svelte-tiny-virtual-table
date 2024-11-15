@@ -1,23 +1,9 @@
-<p align="center"><img src="./static/logo.svg" alt="Logo" width="225"></p>
-<h2 align="center">svelte-tiny-virtual-list</h2>
-<p align="center">A tiny but mighty list virtualization library, with zero dependencies &#128170;</p>
-<p align="center">
-  <a href="https://npmjs.com/package/svelte-tiny-virtual-list"><img src="https://img.shields.io/npm/v/svelte-tiny-virtual-list?style=for-the-badge" alt="NPM VERSION"></a>
-  <a href="https://npmjs.com/package/svelte-tiny-virtual-list"><img src="https://img.shields.io/npm/dt/svelte-tiny-virtual-list?style=for-the-badge" alt="NPM DOWNLOADS"></a>
-  <a href="https://npmjs.com/package/svelte-tiny-virtual-list"><img src="https://img.shields.io/librariesio/release/npm/svelte-tiny-virtual-list?style=for-the-badge" alt="DEPENDENCIES"></a>
-</p>
-<p align="center">
-  <a href="#about">About</a> •
-  <a href="#features">Features</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#usage">Usage</a> •
-  <a href="#examples--demo">Examples</a> •
-  <a href="#license">License</a>
-</p>
+<h2 align="center">svelte-tiny-virtual-table</h2>
+<p align="center">A tiny but mighty table virtualization library, with zero dependencies &#128170;</p>
 
 ## About
 
-Instead of rendering all your data in a huge list, the virtual list component just renders the items that are visible, keeping your page nice and light.  
+Instead of rendering all your data in a huge list, the virtual list component just renders the items that are visible, keeping your page nice and light.
 This is heavily inspired by [react-tiny-virtual-list](https://github.com/clauderic/react-tiny-virtual-list) and uses most of its code and functionality!
 
 ### Features
@@ -31,7 +17,7 @@ This is heavily inspired by [react-tiny-virtual-list](https://github.com/clauder
 
 ## Installation
 
-> If you're using this component in a Sapper application, make sure to install the package to `devDependencies`!  
+> If you're using this component in a Sapper application, make sure to install the package to `devDependencies`!
 > [More Details](https://github.com/sveltejs/sapper-template#using-external-components)
 
 With npm:

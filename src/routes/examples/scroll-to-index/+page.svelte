@@ -65,7 +65,7 @@
 			{scrollToAlignment}
 			{scrollToBehaviour}
 		>
-			<div
+			<tr
 				slot="item"
 				let:index
 				let:style
@@ -73,8 +73,8 @@
 				class="virtual-table-row"
 				class:highlighted={index === scrollToIndex}
 			>
-				Item #{index}
-			</div>
+				<td>Item #{index}</td>
+			</tr>
 		</VirtualTable>
 	</article>
 

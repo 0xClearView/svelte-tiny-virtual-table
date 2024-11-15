@@ -70,7 +70,7 @@
 
 	<div class="flex-1" bind:clientHeight={listHeight}>
 		<VirtualTable height={listHeight} itemSize={90} itemCount={list.length}>
-			<div slot="item" let:index let:style {style}>
+			<tr slot="item" let:index let:style {style}>
 				<article class="hacker-news-item margin" data-num={index + 1}>
 					<div class="truncate">
 						<a
@@ -111,7 +111,7 @@
 						>
 					</div>
 				</article>
-			</div>
+			</tr>
 
 			<div slot="footer">
 				<InfiniteLoading on:infinite={infiniteHandler} />

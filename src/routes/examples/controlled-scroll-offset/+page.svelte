@@ -3,7 +3,7 @@
 
 	let rowHeights = [];
 
-	let scrollOffset: number;
+	let scrollOffset;
 
 	randomize();
 
@@ -38,9 +38,9 @@
 			itemSize={(index) => rowHeights[index]}
 			{scrollOffset}
 		>
-			<div slot="item" let:index let:style {style} class="virtual-table-row">
-				Item #{index}
-			</div>
+			<tr slot="item" let:index let:style {style} class="virtual-table-row">
+				<td>Item #{index}</td>
+			</tr>
 		</VirtualTable>
 	</article>
 

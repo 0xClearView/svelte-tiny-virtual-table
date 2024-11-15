@@ -79,7 +79,6 @@
 	};
 
 	let styleCache = {};
-	let wrapperStyle = '';
 	let innerStyle = '';
 
 	$: {
@@ -195,13 +194,9 @@
 		let updatedItems = [];
 
 		const totalSize = sizeAndPositionManager.getTotalSize();
-		const heightUnit = typeof height === 'number' ? 'px' : '';
-		const widthUnit = typeof width === 'number' ? 'px' : '';
 		if (scrollDirection === DIRECTION.VERTICAL) {
-			wrapperStyle = `height:${height}${heightUnit};width:${width}${widthUnit};`;
 			innerStyle = `flex-direction:column;height:${totalSize}px;`;
 		} else {
-			wrapperStyle = `height:${height}${heightUnit};width:${width}${widthUnit};`;
 			innerStyle = `min-height:100%;width:${totalSize}px;`;
 		}
 
@@ -320,7 +315,7 @@
 	}
 </script>
 
-<table bind:this={wrapper} class="virtual-table-wrapper" style={wrapperStyle}>
+<table bind:this={wrapper} class="virtual-table-wrapper">
 	<slot name="header" />
 
 	<tbody class="virtual-table-inner" style={innerStyle}>
