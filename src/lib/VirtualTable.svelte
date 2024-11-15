@@ -320,26 +320,26 @@
 	}
 </script>
 
-<div bind:this={wrapper} class="virtual-list-wrapper" style={wrapperStyle}>
+<table bind:this={wrapper} class="virtual-table-wrapper" style={wrapperStyle}>
 	<slot name="header" />
 
-	<div class="virtual-list-inner" style={innerStyle}>
+	<tbody class="virtual-table-inner" style={innerStyle}>
 		{#each items as item (getKey ? getKey(item.index) : item.index)}
 			<slot name="item" style={item.style} index={item.index} />
 		{/each}
-	</div>
+	</tbody>
 
 	<slot name="footer" />
-</div>
+</table>
 
 <style>
-	.virtual-list-wrapper {
+	.virtual-table-wrapper {
 		overflow: auto;
 		will-change: transform;
 		-webkit-overflow-scrolling: touch;
 	}
 
-	.virtual-list-inner {
+	.virtual-table-inner {
 		position: relative;
 		display: flex;
 		width: 100%;

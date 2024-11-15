@@ -1,11 +1,11 @@
 <script>
-	import VirtualList from '$lib/VirtualList.svelte';
+	import VirtualTable from '$lib/VirtualTable.svelte';
 
 	let itemSize = 50;
 </script>
 
 <svelte:head>
-	<title>Elements of equal height | svelte-tiny-virtual-list</title>
+	<title>Elements of equal height | svelte-tiny-virtual-table</title>
 </svelte:head>
 
 <div id="elements-of-equal-height-example" class="example-page">
@@ -20,11 +20,11 @@
 	</div>
 
 	<article>
-		<VirtualList height={500} width="auto" itemCount={100000} {itemSize}>
-			<div slot="item" let:index let:style {style} class="virtual-list-row">
+		<VirtualTable height={500} width="auto" itemCount={100000} {itemSize}>
+			<div slot="item" let:index let:style {style} class="virtual-table-row">
 				Item #{index}
 			</div>
-		</VirtualList>
+		</VirtualTable>
 	</article>
 
 	<!-- TODO: Show example code -->

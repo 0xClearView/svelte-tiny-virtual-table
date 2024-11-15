@@ -1,1 +1,1 @@
-export { default as default } from './VirtualList.svelte';
+export { default as default } from './VirtualTable.svelte';

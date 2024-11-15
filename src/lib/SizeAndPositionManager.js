@@ -1,5 +1,5 @@
 /*
- * SizeAndPositionManager was forked from react-tiny-virtual-list, which was
+ * SizeAndPositionManager was forked from react-tiny-virtual-table, which was
  * forked from react-virtualized.
  */
 

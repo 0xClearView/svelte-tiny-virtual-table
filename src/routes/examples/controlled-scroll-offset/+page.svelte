@@ -1,9 +1,9 @@
-<script>
-	import VirtualList from '$lib/VirtualList.svelte';
+<script lang="ts">
+	import VirtualTable from '$lib/VirtualTable.svelte';
 
 	let rowHeights = [];
 
-	let scrollOffset;
+	let scrollOffset: number;
 
 	randomize();
 
@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-	<title>Controlled scroll offset | svelte-tiny-virtual-list</title>
+	<title>Controlled scroll offset | svelte-tiny-virtual-table</title>
 </svelte:head>
 
 <div id="controlled-scroll-offset-example" class="example-page">
@@ -31,17 +31,17 @@
 	</div>
 
 	<article>
-		<VirtualList
+		<VirtualTable
 			height={500}
 			width="auto"
 			itemCount={10000}
 			itemSize={(index) => rowHeights[index]}
 			{scrollOffset}
 		>
-			<div slot="item" let:index let:style {style} class="virtual-list-row">
+			<div slot="item" let:index let:style {style} class="virtual-table-row">
 				Item #{index}
 			</div>
-		</VirtualList>
+		</VirtualTable>
 	</article>
 
 	<!-- TODO: Show example code -->

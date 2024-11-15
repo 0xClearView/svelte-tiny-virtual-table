@@ -1,5 +1,5 @@
 <script>
-	import VirtualList from '$lib/VirtualList.svelte';
+	import VirtualTable from '$lib/VirtualTable.svelte';
 
 	let rowHeights = [];
 
@@ -17,7 +17,7 @@
 </script>
 
 <svelte:head>
-	<title>Variable heights | svelte-tiny-virtual-list</title>
+	<title>Variable heights | svelte-tiny-virtual-table</title>
 </svelte:head>
 
 <div id="variable-heights-example" class="example-page">
@@ -29,11 +29,11 @@
 	</button>
 
 	<article>
-		<VirtualList height={500} width="auto" itemCount={10000} itemSize={rowHeights}>
-			<div slot="item" let:index let:style {style} class="virtual-list-row">
+		<VirtualTable height={500} width="auto" itemCount={10000} itemSize={rowHeights}>
+			<div slot="item" let:index let:style {style} class="virtual-table-row">
 				Item #{index}
 			</div>
-		</VirtualList>
+		</VirtualTable>
 	</article>
 
 	<!-- TODO: Show example code -->

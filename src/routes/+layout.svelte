@@ -35,7 +35,7 @@
 			<i aria-hidden="true">
 				<img src="{base}/logo.svg" srcset="{base}/logo.svg 2x" alt="Logo" />
 			</i>
-			<h6>svelte-tiny-virtual-list</h6>
+			<h6>svelte-tiny-virtual-table</h6>
 		</nav>
 	</header>
 
@@ -43,7 +43,7 @@
 		<i aria-hidden="true">description</i>
 		<div>README</div>
 	</a>
-	<a href="https://github.com/jonasgeiler/svelte-tiny-virtual-list" target="_blank">
+	<a href="https://github.com/jonasgeiler/svelte-tiny-virtual-table" target="_blank">
 		<i aria-hidden="true">
 			<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 				<path
@@ -53,7 +53,7 @@
 		</i>
 		<div>GitHub <i aria-hidden="true" class="tiny">launch</i></div>
 	</a>
-	<a href="https://npmjs.com/package/svelte-tiny-virtual-list" target="_blank">
+	<a href="https://npmjs.com/package/svelte-tiny-virtual-table" target="_blank">
 		<i aria-hidden="true">
 			<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 				<path
@@ -116,7 +116,7 @@
 	<i aria-hidden="true">
 		<img src="{base}/logo.svg" srcset="{base}/logo.svg 2x" alt="Logo" />
 	</i>
-	<h6 class="m">svelte-tiny-virtual-list</h6>
+	<h6 class="m">svelte-tiny-virtual-table</h6>
 	<div class="max"></div>
 	<button class="circle border" on:click={handleSwitchDarkMode}>
 		<i aria-hidden="true">{darkMode ? 'light_mode' : 'dark_mode'}</i>
@@ -128,7 +128,7 @@
 			<i aria-hidden="true">
 				<img src="{base}/logo.svg" srcset="{base}/logo.svg 2x" alt="Logo" />
 			</i>
-			<h6 class="m">svelte-tiny-virtual-list</h6>
+			<h6 class="m">svelte-tiny-virtual-table</h6>
 			<div class="max"></div>
 			<button class="transparent circle" on:click={() => (mobileMenuOpen = false)}>
 				<i aria-hidden="true">close</i>
@@ -141,7 +141,7 @@
 			<i aria-hidden="true">description</i>
 			<div>README</div>
 		</a>
-		<a href="https://github.com/jonasgeiler/svelte-tiny-virtual-list" target="_blank">
+		<a href="https://github.com/jonasgeiler/svelte-tiny-virtual-table" target="_blank">
 			<i aria-hidden="true">
 				<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 					<path
@@ -151,7 +151,7 @@
 			</i>
 			<div>GitHub <i aria-hidden="true" class="tiny">launch</i></div>
 		</a>
-		<a href="https://npmjs.com/package/svelte-tiny-virtual-list" target="_blank">
+		<a href="https://npmjs.com/package/svelte-tiny-virtual-table" target="_blank">
 			<i aria-hidden="true">
 				<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 					<path

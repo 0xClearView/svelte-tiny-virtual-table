@@ -1,7 +1,7 @@
 <script>
-	import VirtualList from '$lib/VirtualList.svelte';
+	import VirtualTable from '$lib/VirtualTable.svelte';
 
-	let virtualList;
+	let virtualTable;
 	let rowHeights = [];
 
 	let scrollToIndex;
@@ -22,7 +22,7 @@
 </script>
 
 <svelte:head>
-	<title>Scroll to index | svelte-tiny-virtual-list</title>
+	<title>Scroll to index | svelte-tiny-virtual-table</title>
 </svelte:head>
 
 <div id="scroll-to-index-example" class="example-page">
@@ -55,8 +55,8 @@
 	</div>
 
 	<article>
-		<VirtualList
-			bind:this={virtualList}
+		<VirtualTable
+			bind:this={virtualTable}
 			height={500}
 			width="auto"
 			itemCount={10000}
@@ -70,12 +70,12 @@
 				let:index
 				let:style
 				{style}
-				class="virtual-list-row"
+				class="virtual-table-row"
 				class:highlighted={index === scrollToIndex}
 			>
 				Item #{index}
 			</div>
-		</VirtualList>
+		</VirtualTable>
 	</article>
 
 	<!-- TODO: Show example code -->

@@ -1,5 +1,5 @@
 <script>
-	import VirtualList from '$lib/VirtualList.svelte';
+	import VirtualTable from '$lib/VirtualTable.svelte';
 	import InfiniteLoading from 'svelte-infinite-loading';
 	import { base } from '$app/paths';
 
@@ -55,7 +55,7 @@
 </script>
 
 <svelte:head>
-	<title>Hacker News | svelte-tiny-virtual-list</title>
+	<title>Hacker News | svelte-tiny-virtual-table</title>
 </svelte:head>
 
 <div id="hacker-news-demo" class="demo-page flex-1 flex flex-column">
@@ -69,7 +69,7 @@
 	</header>
 
 	<div class="flex-1" bind:clientHeight={listHeight}>
-		<VirtualList height={listHeight} itemSize={90} itemCount={list.length}>
+		<VirtualTable height={listHeight} itemSize={90} itemCount={list.length}>
 			<div slot="item" let:index let:style {style}>
 				<article class="hacker-news-item margin" data-num={index + 1}>
 					<div class="truncate">
@@ -116,7 +116,7 @@
 			<div slot="footer">
 				<InfiniteLoading on:infinite={infiniteHandler} />
 			</div>
-		</VirtualList>
+		</VirtualTable>
 	</div>
 </div>
 

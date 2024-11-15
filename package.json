@@ -1,12 +1,12 @@
 {
-	"name": "svelte-tiny-virtual-list",
+	"name": "svelte-tiny-virtual-table",
 	"version": "3.0.0-alpha.1",
 	"description": "A tiny but mighty list virtualization component for svelte, with zero dependencies 💪",
-	"homepage": "https://github.com/jonasgeiler/svelte-tiny-virtual-list#readme",
-	"bugs": "https://github.com/jonasgeiler/svelte-tiny-virtual-list/issues",
+	"homepage": "https://github.com/0xclearview/svelte-tiny-virtual-table#readme",
+	"bugs": "https://github.com/0xclearview/svelte-tiny-virtual-table/issues",
 	"license": "MIT",
-	"author": "Jonas Geiler <npm@jonasgeiler.com> (https://jonasgeiler.com)",
-	"repository": "github:jonasgeiler/svelte-tiny-virtual-list",
+	"author": "Marcos Gutiérrez (margual56@gmail.com)",
+	"repository": "github:0xclearview/svelte-tiny-virtual-table",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && pnpm run package",

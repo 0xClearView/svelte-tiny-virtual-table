@@ -1,5 +1,5 @@
 /// <reference types="svelte" />
-import { SvelteComponentTyped } from 'svelte';
+import { SvelteComponent } from 'svelte';
 
 export type Alignment = 'auto' | 'start' | 'center' | 'end';
 export type ScrollBehaviour = 'auto' | 'smooth' | 'instant';
@@ -10,9 +10,9 @@ export type ItemSizeGetter = (index: number) => number;
 export type ItemSize = number | number[] | ItemSizeGetter;
 
 /**
- * VirtualList props
+ * VirtualTable props
  */
-export interface VirtualListProps {
+export interface VirtualTableProps {
 	/**
 	 * Width of List. This property will determine the number of rendered items when scrollDirection is `'horizontal'`.
 	 *
@@ -100,9 +100,9 @@ export interface VirtualListProps {
 }
 
 /**
- * VirtualList slots
+ * VirtualTable slots
  */
-export interface VirtualListSlots {
+export interface VirtualTableSlots {
 	/**
 	 * Slot for each item
 	 */
@@ -124,7 +124,7 @@ export interface VirtualListSlots {
 	header: {};
 
 	/**
-	 * Slot for the elements that should appear at the bottom of the list (e.g. `VirtualList` component from `svelte-infinite-loading`)
+	 * Slot for the elements that should appear at the bottom of the list (e.g. `VirtualTable` component from `svelte-infinite-loading`)
 	 */
 	footer: {};
 }
@@ -158,9 +158,9 @@ export interface AfterScrollDetail {
 export interface AfterScrollEvent extends CustomEvent<AfterScrollDetail> {}
 
 /**
- * VirtualList events
+ * VirtualTable events
  */
-export interface VirtualListEvents {
+export interface VirtualTableEvents {
 	/**
 	 * Fired when the visible items are updated
 	 */
@@ -173,10 +173,10 @@ export interface VirtualListEvents {
 }
 
 /**
- * VirtualList component
+ * VirtualTable component
  */
-export default class VirtualList extends SvelteComponentTyped<
-	VirtualListProps,
-	VirtualListEvents,
-	VirtualListSlots
+export default class VirtualTable extends SvelteComponent<
+	VirtualTableProps,
+	VirtualTableEvents,
+	VirtualTableSlots
 > {}

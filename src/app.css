@@ -114,19 +114,19 @@ article * {
 }
 
 /* Center content of virtual list items on example pages */
-.example-page .virtual-list-row,
-.example-page .virtual-list-col {
+.example-page .virtual-table-row,
+.example-page .virtual-table-col {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
 /* Add bottom borders to virtual list rows on example pages */
-.example-page .virtual-list-row:not(:last-child) {
+.example-page .virtual-table-row:not(:last-child) {
 	border-bottom: 0.0625rem solid var(--outline);
 }
 
 /* Add right borders to virtual list columns on example pages */
-.example-page .virtual-list-col:not(:last-child) {
+.example-page .virtual-table-col:not(:last-child) {
 	border-right: 0.0625rem solid var(--outline);
 }

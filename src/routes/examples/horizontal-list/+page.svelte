@@ -1,11 +1,11 @@
 <script>
-	import VirtualList from '$lib/VirtualList.svelte';
+	import VirtualTable from '$lib/VirtualTable.svelte';
 
 	let width = 1;
 </script>
 
 <svelte:head>
-	<title>Horizontal list | svelte-tiny-virtual-list</title>
+	<title>Horizontal list | svelte-tiny-virtual-table</title>
 </svelte:head>
 
 <div id="horizontal-list-example" class="example-page">
@@ -13,17 +13,17 @@
 
 	<article>
 		<div bind:clientWidth={width} class="row scroll">
-			<VirtualList
+			<VirtualTable
 				height="200px"
 				{width}
 				scrollDirection="horizontal"
 				itemCount={100000}
 				itemSize={150}
 			>
-				<div slot="item" let:index let:style {style} class="virtual-list-col">
+				<div slot="item" let:index let:style {style} class="virtual-table-col">
 					Item #{index}
 				</div>
-			</VirtualList>
+			</VirtualTable>
 		</div>
 	</article>
 
