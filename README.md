@@ -4,7 +4,7 @@
 ## About
 
 Instead of rendering all your data in a huge list, the virtual list component just renders the items that are visible, keeping your page nice and light.
-This is heavily inspired by [react-tiny-virtual-list](https://github.com/clauderic/react-tiny-virtual-list) and uses most of its code and functionality!
+This is heavily inspired by [react-tiny-virtual-table](https://github.com/clauderic/react-tiny-virtual-table) and uses most of its code and functionality!
 
 ### Features
 
@@ -23,53 +23,53 @@ This is heavily inspired by [react-tiny-virtual-list](https://github.com/clauder
 With npm:
 
 ```shell
-$ npm install svelte-tiny-virtual-list
+$ npm install svelte-tiny-virtual-table
 ```
 
 With yarn:
 
 ```shell
-$ yarn add svelte-tiny-virtual-list
+$ yarn add svelte-tiny-virtual-table
 ```
 
 With [pnpm](https://pnpm.js.org/) (recommended):
 
 ```shell
 $ npm i -g pnpm
-$ pnpm install svelte-tiny-virtual-list
+$ pnpm install svelte-tiny-virtual-table
 ```
 
 From CDN (via [unpkg](https://unpkg.com/)):
 
 ```html
 <!-- UMD -->
-<script src="https://unpkg.com/svelte-tiny-virtual-list@^1/dist/svelte-tiny-virtual-list.js"></script>
+<script src="https://unpkg.com/svelte-tiny-virtual-table@^1/dist/svelte-tiny-virtual-table.js"></script>
 
 <!-- ES Module -->
-<script src="https://unpkg.com/svelte-tiny-virtual-list@^1/dist/svelte-tiny-virtual-list.mjs"></script>
+<script src="https://unpkg.com/svelte-tiny-virtual-table@^1/dist/svelte-tiny-virtual-table.mjs"></script>
 ```
 
 ## Usage
 
 ```svelte
 <script>
-	import VirtualList from 'svelte-tiny-virtual-list';
+	import VirtualTable from 'svelte-tiny-virtual-table';
 
 	const data = ['A', 'B', 'C', 'D', 'E', 'F' /* ... */];
 </script>
 
-<VirtualList width="100%" height={600} itemCount={data.length} itemSize={50}>
+<VirtualTable width="100%" height={600} itemCount={data.length} itemSize={50}>
 	<div slot="item" let:index let:style {style}>
 		Letter: {data[index]}, Row: #{index}
 	</div>
-</VirtualList>
+</VirtualTable>
 ```
 
 Also works pretty well with [`svelte-infinite-loading`](https://github.com/Skayo/svelte-infinite-loading):
 
 ```svelte
 <script>
-	import VirtualList from 'svelte-tiny-virtual-list';
+	import VirtualTable from 'svelte-tiny-virtual-table';
 	import InfiniteLoading from 'svelte-infinite-loading';
 
 	let data = ['A', 'B', 'C', 'D', 'E', 'F' /* ... */];
@@ -88,7 +88,7 @@ Also works pretty well with [`svelte-infinite-loading`](https://github.com/Skayo
 	}
 </script>
 
-<VirtualList width="100%" height={600} itemCount={data.length} itemSize={50}>
+<VirtualTable width="100%" height={600} itemCount={data.length} itemSize={50}>
 	<div slot="item" let:index let:style {style}>
 		Letter: {data[index]}, Row: #{index}
 	</div>
@@ -96,7 +96,7 @@ Also works pretty well with [`svelte-infinite-loading`](https://github.com/Skayo
 	<div slot="footer">
 		<InfiniteLoading on:infinite={infiniteHandler} />
 	</div>
-</VirtualList>
+</VirtualTable>
 ```
 
 ### Props
@@ -143,29 +143,29 @@ _\* `height` must be a number when `scrollDirection` is `'vertical'`. Similarly,
 
 - `recomputeSizes(startIndex: number)` - This method force recomputes the item sizes after the specified index (these are normally cached).
 
-`VirtualList` has no way of knowing when its underlying data has changed, since it only receives a itemSize property. If the itemSize is a `number`, this isn't an issue, as it can compare before and after values and automatically call `recomputeSizes` internally.
-However, if you're passing a function to `itemSize`, that type of comparison is error prone. In that event, you'll need to call `recomputeSizes` manually to inform the `VirtualList` that the size of its items has changed.
+`VirtualTable` has no way of knowing when its underlying data has changed, since it only receives a itemSize property. If the itemSize is a `number`, this isn't an issue, as it can compare before and after values and automatically call `recomputeSizes` internally.
+However, if you're passing a function to `itemSize`, that type of comparison is error prone. In that event, you'll need to call `recomputeSizes` manually to inform the `VirtualTable` that the size of its items has changed.
 
 #### Use the methods like this:
 
 ```svelte
 <script>
 	import { onMount } from 'svelte';
-	import VirtualList from 'svelte-tiny-virtual-list';
+	import VirtualTable from 'svelte-tiny-virtual-table';
 
 	const data = ['A', 'B', 'C', 'D', 'E', 'F' /* ... */];
 
-	let virtualList;
+	let VirtualTable;
 
 	function handleClick() {
-		virtualList.recomputeSizes(0);
+		VirtualTable.recomputeSizes(0);
 	}
 </script>
 
 <button on:click={handleClick}>Recompute Sizes</button>
 
-<VirtualList
-	bind:this={virtualList}
+<VirtualTable
+	bind:this={VirtualTable}
 	width="100%"
 	height={600}
 	itemCount={data.length}
@@ -174,7 +174,7 @@ However, if you're passing a function to `itemSize`, that type of comparison is 
 	<div slot="item" let:index let:style {style}>
 		Letter: {data[index]}, Row: #{index}
 	</div>
-</VirtualList>
+</VirtualTable>
 ```
 
 ### Styling
@@ -183,26 +183,26 @@ You can style the elements of the virtual list like this:
 
 ```svelte
 <script>
-	import VirtualList from 'svelte-tiny-virtual-list';
+	import VirtualTable from 'svelte-tiny-virtual-table';
 
 	const data = ['A', 'B', 'C', 'D', 'E', 'F' /* ... */];
 </script>
 
 <div class="list">
-	<VirtualList width="100%" height={600} itemCount={data.length} itemSize={50}>
+	<VirtualTable width="100%" height={600} itemCount={data.length} itemSize={50}>
 		<div slot="item" let:index let:style {style}>
 			Letter: {data[index]}, Row: #{index}
 		</div>
-	</VirtualList>
+	</VirtualTable>
 </div>
 
 <style>
-	.list :global(.virtual-list-wrapper) {
+	.list :global(.virtual-table-wrapper) {
 		background-color: #0f0;
 		/* ... */
 	}
 
-	.list :global(.virtual-list-inner) {
+	.list :global(.virtual-table-inner) {
 		background-color: #f00;
 		/* ... */
 	}
@@ -222,4 +222,4 @@ You can style the elements of the virtual list like this:
 
 ## License
 
-[MIT License](https://github.com/Skayo/svelte-tiny-virtual-list/blob/master/LICENSE)
+[MIT License](https://github.com/Skayo/svelte-tiny-virtual-table/blob/master/LICENSE)
