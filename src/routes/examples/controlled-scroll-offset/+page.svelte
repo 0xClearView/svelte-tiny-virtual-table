@@ -1,9 +1,9 @@
 <script lang="ts">
 	import VirtualTable from '$lib/VirtualTable.svelte';
 
-	let rowHeights = [];
+	let rowHeights: number[] = [];
 
-	let scrollOffset;
+	let scrollOffset: number = 0;
 
 	randomize();
 

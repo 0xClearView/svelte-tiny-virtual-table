@@ -3,76 +3,42 @@
  * forked from react-virtualized.
  */
 
-import { ALIGNMENT } from '$lib/constants.js';
+import { ALIGNMENT } from './constants';
 
-/**
- * @callback ItemSizeGetter
- * @param {number} index
- * @return {number}
- */
-
-/**
- * @typedef ItemSize
- * @type {number | number[] | ItemSizeGetter}
- */
-
-/**
- * @typedef SizeAndPosition
- * @type {object}
- * @property {number} size
- * @property {number} offset
- */
-
-/**
- * @typedef SizeAndPositionData
- * @type {Object.<number, SizeAndPosition>}
- */
-
-/**
- * @typedef Options
- * @type {object}
- * @property {number} itemCount
- * @property {ItemSize} itemSize
- * @property {number} estimatedItemSize
- */
+export type ItemSizeGetter = (index: number) => number;
+type SizeAndPosition = {
+	size: number;
+	offset: number;
+};
+type SizeAndPositionData = {
+	[index: number]: SizeAndPosition;
+};
+type ItemSize = number | number[] | ItemSizeGetter;
+type Options = {
+	itemCount: number;
+	itemSize: ItemSize;
+	estimatedItemSize: number;
+};
 
 export default class SizeAndPositionManager {
-	/**
-	 * @param {Options} options
-	 */
-	constructor({ itemSize, itemCount, estimatedItemSize }) {
-		/**
-		 * @private
-		 * @type {ItemSize}
-		 */
+	itemSize: number | number[] | ItemSizeGetter;
+	itemCount: number;
+	estimatedItemSize: number;
+
+	/// Cache of size and position data for items, mapped by item index.
+	itemSizeAndPositionData: SizeAndPositionData;
+
+	/// Measurements for items up to this index can be trusted; items afterward should be estimated.
+	lastMeasuredIndex: number;
+
+	/// Total size of all items being measured.
+	totalSize: number | undefined;
+
+	constructor({ itemSize, itemCount, estimatedItemSize }: Options) {
 		this.itemSize = itemSize;
-
-		/**
-		 * @private
-		 * @type {number}
-		 */
 		this.itemCount = itemCount;
-
-		/**
-		 * @private
-		 * @type {number}
-		 */
 		this.estimatedItemSize = estimatedItemSize;
-
-		/**
-		 * Cache of size and position data for items, mapped by item index.
-		 *
-		 * @private
-		 * @type {SizeAndPositionData}
-		 */
 		this.itemSizeAndPositionData = {};
-
-		/**
-		 * Measurements for items up to this index can be trusted; items afterward should be estimated.
-		 *
-		 * @private
-		 * @type {number}
-		 */
 		this.lastMeasuredIndex = -1;
 
 		this.checkForMismatchItemSizeAndItemCount();
@@ -87,7 +53,7 @@ export default class SizeAndPositionManager {
 	/**
 	 * @param {Options} options
 	 */
-	updateConfig({ itemSize, itemCount, estimatedItemSize }) {
+	updateConfig({ itemSize, itemCount, estimatedItemSize }: Options) {
 		if (itemCount != null) {
 			this.itemCount = itemCount;
 		}
@@ -115,10 +81,7 @@ export default class SizeAndPositionManager {
 		}
 	}
 
-	/**
-	 * @param {number} index
-	 */
-	getSize(index) {
+	getSize(index: number) {
 		const { itemSize } = this;
 
 		if (typeof itemSize === 'function') {
@@ -128,10 +91,8 @@ export default class SizeAndPositionManager {
 		return Array.isArray(itemSize) ? itemSize[index] : itemSize;
 	}
 
-	/**
-	 * Compute the totalSize and itemSizeAndPositionData at the start,
-	 * only when itemSize is a number or an array.
-	 */
+	/// Compute the totalSize and itemSizeAndPositionData at the start,
+	/// only when itemSize is a number or an array.
 	computeTotalSizeAndPositionData() {
 		let totalSize = 0;
 		for (let i = 0; i < this.itemCount; i++) {
@@ -152,12 +113,8 @@ export default class SizeAndPositionManager {
 		return this.lastMeasuredIndex;
 	}
 
-	/**
-	 * This method returns the size and position for the item at the specified index.
-	 *
-	 * @param {number} index
-	 */
-	getSizeAndPositionForIndex(index) {
+	/// This method returns the size and position for the item at the specified index.
+	getSizeAndPositionForIndex(index: number) {
 		if (index < 0 || index >= this.itemCount) {
 			throw Error(`Requested index ${index} is outside of range 0..${this.itemCount}`);
 		}
@@ -167,13 +124,9 @@ export default class SizeAndPositionManager {
 			: this.itemSizeAndPositionData[index];
 	}
 
-	/**
-	 * This is used when itemSize is a function.
-	 * just-in-time calculates (or used cached values) for items leading up to the index.
-	 *
-	 * @param {number} index
-	 */
-	getJustInTimeSizeAndPositionForIndex(index) {
+	/// This is used when itemSize is a function.
+	/// just-in-time calculates (or used cached values) for items leading up to the index.
+	getJustInTimeSizeAndPositionForIndex(index: number) {
 		if (index > this.lastMeasuredIndex) {
 			const lastMeasuredSizeAndPosition = this.getSizeAndPositionOfLastMeasuredItem();
 			let offset = lastMeasuredSizeAndPosition.offset + lastMeasuredSizeAndPosition.size;
@@ -205,11 +158,7 @@ export default class SizeAndPositionManager {
 			: { offset: 0, size: 0 };
 	}
 
-	/**
-	 * Total size of all items being measured.
-	 *
-	 * @return {number}
-	 */
+	/// Total size of all items being measured.
 	getTotalSize() {
 		// Return the pre computed totalSize when itemSize is number or array.
 		if (this.totalSize) return this.totalSize;
@@ -228,16 +177,18 @@ export default class SizeAndPositionManager {
 		);
 	}
 
-	/**
-	 * Determines a new offset that ensures a certain item is visible, given the alignment.
-	 *
-	 * @param {'auto' | 'start' | 'center' | 'end'} align Desired alignment within container
-	 * @param {number | undefined} containerSize Size (width or height) of the container viewport
-	 * @param {number | undefined} currentOffset
-	 * @param {number | undefined} targetIndex
-	 * @return {number} Offset to use to ensure the specified item is visible
-	 */
-	getUpdatedOffsetForIndex({ align = ALIGNMENT.START, containerSize, currentOffset, targetIndex }) {
+	/// Determines a new offset that ensures a certain item is visible, given the alignment.
+	getUpdatedOffsetForIndex({
+		align = ALIGNMENT.START,
+		containerSize,
+		currentOffset,
+		targetIndex
+	}: {
+		align: string;
+		containerSize: number;
+		currentOffset: number;
+		targetIndex: number;
+	}) {
 		if (containerSize <= 0) {
 			return 0;
 		}
@@ -267,13 +218,15 @@ export default class SizeAndPositionManager {
 		return Math.max(0, Math.min(totalSize - containerSize, idealOffset));
 	}
 
-	/**
-	 * @param {number} containerSize
-	 * @param {number} offset
-	 * @param {number} overscanCount
-	 * @return {{stop: number|undefined, start: number|undefined}}
-	 */
-	getVisibleRange({ containerSize = 0, offset, overscanCount }) {
+	getVisibleRange({
+		containerSize = 0,
+		offset,
+		overscanCount
+	}: {
+		containerSize: number;
+		offset: number;
+		overscanCount: number;
+	}) {
 		const totalSize = this.getTotalSize();
 
 		if (totalSize === 0) {
@@ -308,26 +261,18 @@ export default class SizeAndPositionManager {
 		};
 	}
 
-	/**
-	 * Clear all cached values for items after the specified index.
-	 * This method should be called for any item that has changed its size.
-	 * It will not immediately perform any calculations; they'll be performed the next time getSizeAndPositionForIndex() is called.
-	 *
-	 * @param {number} index
-	 */
-	resetItem(index) {
+	/// Clear all cached values for items after the specified index.
+	/// This method should be called for any item that has changed its size.
+	/// It will not immediately perform any calculations; they'll be performed the next time getSizeAndPositionForIndex() is called.
+	resetItem(index: number) {
 		this.lastMeasuredIndex = Math.min(this.lastMeasuredIndex, index - 1);
 	}
 
-	/**
-	 * Searches for the item (index) nearest the specified offset.
-	 *
-	 * If no exact match is found the next lowest item index will be returned.
-	 * This allows partially visible items (with offsets just before/above the fold) to be visible.
-	 *
-	 * @param {number} offset
-	 */
-	findNearestItem(offset) {
+	/// Searches for the item (index) nearest the specified offset.
+	///
+	/// If no exact match is found the next lowest item index will be returned.
+	/// This allows partially visible items (with offsets just before/above the fold) to be visible.
+	private findNearestItem(offset: number) {
 		if (isNaN(offset)) {
 			throw Error(`Invalid offset ${offset} specified`);
 		}
@@ -357,13 +302,7 @@ export default class SizeAndPositionManager {
 		}
 	}
 
-	/**
-	 * @private
-	 * @param {number} low
-	 * @param {number} high
-	 * @param {number} offset
-	 */
-	binarySearch({ low, high, offset }) {
+	private binarySearch({ low, high, offset }: { low: number; high: number; offset: number }) {
 		let middle = 0;
 		let currentOffset = 0;
 
@@ -387,12 +326,7 @@ export default class SizeAndPositionManager {
 		return 0;
 	}
 
-	/**
-	 * @private
-	 * @param {number} index
-	 * @param {number} offset
-	 */
-	exponentialSearch({ index, offset }) {
+	exponentialSearch({ index, offset }: { index: number; offset: number }) {
 		let interval = 1;
 
 		while (index < this.itemCount && this.getSizeAndPositionForIndex(index).offset < offset) {

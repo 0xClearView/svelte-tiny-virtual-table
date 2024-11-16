@@ -1,7 +1,9 @@
 /** @type { import("eslint").Linter.Config } */
 module.exports = {
+	parser: '@typescript-eslint/parser',
 	root: true,
 	extends: ['eslint:recommended', 'plugin:svelte/recommended', 'prettier'],
+	plugins: ['@typescript-eslint'],
 	parserOptions: {
 		sourceType: 'module',
 		ecmaVersion: 2020,

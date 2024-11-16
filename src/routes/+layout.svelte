@@ -80,10 +80,6 @@
 		<i aria-hidden="true">view_day</i>
 		<div>Variable heights</div>
 	</a>
-	<a href="/examples/horizontal-list" class:active={$page.route.id === '/examples/horizontal-list'}>
-		<i aria-hidden="true">view_week</i>
-		<div>Horizontal list</div>
-	</a>
 	<a href="/examples/scroll-to-index" class:active={$page.route.id === '/examples/scroll-to-index'}>
 		<i aria-hidden="true">pin</i>
 		<div>Scroll to index</div>

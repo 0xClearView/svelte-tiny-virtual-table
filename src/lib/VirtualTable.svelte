@@ -6,7 +6,7 @@
 	 * @see https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md
 	 */
 	const thirdEventArg = (() => {
-		let result = false;
+		let result = { passive: false };
 
 		try {
 			const arg = Object.defineProperty({}, 'passive', {
@@ -16,7 +16,7 @@
 				}
 			});
 
-			window.addEventListener('testpassive', arg, arg);
+			window.addEventListener('testpassive', arg, { passive: true });
 			window.remove('testpassive', arg, arg);
 		} catch (e) {
 			/* */
@@ -26,25 +26,25 @@
 	})();
 </script>
 
-<script>
+<script lang="ts">
 	import { onMount, onDestroy, createEventDispatcher } from 'svelte';
-	import SizeAndPositionManager from './SizeAndPositionManager';
+	import SizeAndPositionManager, { type ItemSizeGetter } from './SizeAndPositionManager';
 	import { DIRECTION, SCROLL_CHANGE_REASON, SCROLL_PROP, SCROLL_PROP_LEGACY } from './constants';
 
-	export let height;
-	export let width = '100%';
+	export let height: number | string = '100%';
+	export let width: number | string = '100%';
 
-	export let itemCount;
-	export let itemSize;
-	export let estimatedItemSize = null;
-	export let stickyIndices = null;
-	export let getKey = null;
+	export let itemCount: number = 1;
+	export let itemSize: number | ItemSizeGetter = 50;
+	export let estimatedItemSize: number | null = null;
+	export let stickyIndices: number[] = [];
+	export let getKey: any | null = null;
 
 	export let scrollDirection = DIRECTION.VERTICAL;
-	export let scrollOffset = null;
-	export let scrollToIndex = null;
-	export let scrollToAlignment = null;
-	export let scrollToBehaviour = 'instant';
+	export let scrollOffset: number | null = null;
+	export let scrollToIndex: number | null = null;
+	export let scrollToAlignment: string | null = null;
+	export let scrollToBehaviour: ScrollBehavior = 'instant';
 
 	export let overscanCount = 3;
 
@@ -57,10 +57,10 @@
 	});
 
 	let mounted = false;
-	let wrapper;
-	let items = [];
+	let wrapper: HTMLTableElement | null = null;
+	let items: any[] = [];
 
-	let state = {
+	let state: { offset: number; scrollChangeReason: SCROLL_CHANGE_REASON } = {
 		offset:
 			scrollOffset ||
 			(scrollToIndex != null && items.length && getOffsetForIndex(scrollToIndex)) ||
@@ -78,7 +78,8 @@
 		estimatedItemSize
 	};
 
-	let styleCache = {};
+	let styleCache: { [key: number]: any } = {};
+	let wrapperStyle = '';
 	let innerStyle = '';
 
 	$: {
@@ -107,7 +108,7 @@
 	onMount(() => {
 		mounted = true;
 
-		wrapper.addEventListener('scroll', handleScroll, thirdEventArg);
+		wrapper?.addEventListener('scroll', handleScroll, thirdEventArg);
 
 		if (scrollOffset != null) {
 			scrollTo(scrollOffset);
@@ -117,7 +118,7 @@
 	});
 
 	onDestroy(() => {
-		if (mounted) wrapper.removeEventListener('scroll', handleScroll);
+		if (mounted) wrapper?.removeEventListener('scroll', handleScroll);
 	});
 
 	function propsUpdated() {
@@ -183,10 +184,18 @@
 		prevState = state;
 	}
 
+	function getContainerSize(): number {
+		const size_raw: string | number = scrollDirection === DIRECTION.VERTICAL ? height : width;
+		return typeof size_raw === 'number'
+			? size_raw
+			: Number.parseInt((size_raw as string).replace('px', '').replace('%', ''));
+	}
+
 	function refresh() {
 		const { offset } = state;
+
 		const { start, stop } = sizeAndPositionManager.getVisibleRange({
-			containerSize: scrollDirection === DIRECTION.VERTICAL ? height : width,
+			containerSize: getContainerSize(),
 			offset,
 			overscanCount
 		});
@@ -194,6 +203,16 @@
 		let updatedItems = [];
 
 		const totalSize = sizeAndPositionManager.getTotalSize();
+		const heightUnit = typeof height === 'number' ? 'px' : '';
+
+		// "auto" will result in 0px width for the table element
+		if (width === 'auto') {
+			width = '100%';
+		}
+
+		const widthUnit = typeof width === 'number' ? 'px' : '';
+		wrapperStyle = `height:${height}${heightUnit};width:${width}${widthUnit};`;
+
 		if (scrollDirection === DIRECTION.VERTICAL) {
 			innerStyle = `flex-direction:column;height:${totalSize}px;`;
 		} else {
@@ -202,7 +221,7 @@
 
 		const hasStickyIndices = stickyIndices != null && stickyIndices.length !== 0;
 		if (hasStickyIndices) {
-			for (let i = 0; i < stickyIndices.length; i++) {
+			for (let i = 0; i < stickyIndices?.length; i++) {
 				const index = stickyIndices[i];
 				updatedItems.push({
 					index,
@@ -232,13 +251,13 @@
 		items = updatedItems;
 	}
 
-	function scrollTo(value) {
-		if ('scroll' in wrapper) {
+	function scrollTo(value: number) {
+		if (wrapper && 'scroll' in wrapper) {
 			wrapper.scroll({
 				[SCROLL_PROP[scrollDirection]]: value,
 				behavior: scrollToBehaviour
 			});
-		} else {
+		} else if (wrapper) {
 			wrapper[SCROLL_PROP_LEGACY[scrollDirection]] = value;
 		}
 	}
@@ -249,20 +268,20 @@
 		refresh();
 	}
 
-	function getOffsetForIndex(index, align = scrollToAlignment, _itemCount = itemCount) {
+	function getOffsetForIndex(index: number, align = scrollToAlignment, _itemCount = itemCount) {
 		if (index < 0 || index >= _itemCount) {
 			index = 0;
 		}
 
 		return sizeAndPositionManager.getUpdatedOffsetForIndex({
-			align,
-			containerSize: scrollDirection === DIRECTION.VERTICAL ? height : width,
+			align: align ? align : 'auto',
+			containerSize: getContainerSize(),
 			currentOffset: state.offset || 0,
 			targetIndex: index
 		});
 	}
 
-	function handleScroll(event) {
+	function handleScroll(event: Event) {
 		const offset = getWrapperOffset();
 
 		if (offset < 0 || state.offset === offset || event.target !== wrapper) return;
@@ -286,7 +305,7 @@
 		return estimatedItemSize || (typeof itemSize === 'number' && itemSize) || 50;
 	}
 
-	function getStyle(index, sticky) {
+	function getStyle(index: number, sticky: boolean) {
 		if (styleCache[index]) return styleCache[index];
 
 		const { size, offset } = sizeAndPositionManager.getSizeAndPositionForIndex(index);
@@ -315,7 +334,7 @@
 	}
 </script>
 
-<table bind:this={wrapper} class="virtual-table-wrapper">
+<table bind:this={wrapper} class="virtual-table-wrapper" style={wrapperStyle}>
 	<slot name="header" />
 
 	<tbody class="virtual-table-inner" style={innerStyle}>
@@ -329,6 +348,7 @@
 
 <style>
 	.virtual-table-wrapper {
+		display: block;
 		overflow: auto;
 		will-change: transform;
 		-webkit-overflow-scrolling: touch;
