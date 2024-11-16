@@ -1,6 +1,6 @@
 {
 	"name": "@0xclearview/svelte-tiny-virtual-table",
-	"version": "0.0.1",
+	"version": "0.0.3",
 	"description": "A tiny but mighty list virtualization component for svelte, with zero dependencies 💪",
 	"homepage": "https://github.com/0xclearview/svelte-tiny-virtual-table#readme",
 	"bugs": {
@@ -27,12 +27,12 @@
 		"test:unit": "vitest"
 	},
 	"peerDependencies": {
-		"svelte": "^4.2.19"
+		"svelte": "^5.1.10"
 	},
 	"devDependencies": {
 		"@playwright/test": "1.47.2",
-		"@sveltejs/adapter-cloudflare": "4.7.4",
-		"@sveltejs/kit": "2.5.28",
+		"@sveltejs/adapter-cloudflare": "^0.0.1",
+		"@sveltejs/kit": "^2.8.1",
 		"@sveltejs/package": "2.3.7",
 		"@sveltejs/vite-plugin-svelte": "3.1.2",
 		"@types/eslint": "8.56.12",
@@ -118,7 +118,7 @@
 		"color-name": "^1.1.4",
 		"concat-map": "^0.0.1",
 		"confbox": "^0.1.8",
-		"cookie": "^0.6.0",
+		"cookie": "^1.0.1",
 		"cross-spawn": "^7.0.5",
 		"css-tree": "^2.3.1",
 		"cssesc": "^3.0.0",
@@ -318,7 +318,7 @@
 		"ufo": "^1.5.4",
 		"undici": "^5.28.4",
 		"undici-types": "^6.19.8",
-		"unenv": "^2.0.0-20241024-111401-d4156ac",
+		"unenv": "^1.10.0",
 		"uri-js": "^4.4.1",
 		"util-deprecate": "^1.0.2",
 		"vite-node": "^1.2.2",
